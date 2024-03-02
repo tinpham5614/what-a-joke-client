@@ -1,8 +1,12 @@
-import { Button, CircularProgress, Container, Stack } from "@mui/material";
+import { Button, CircularProgress, Container, Stack, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 
+  interface Joke {
+    setup: string;
+    delivery: string;
+  }
 export default function GetJoke() {
-  const [joke, setJoke] = useState("");
+  const [data, setData] = useState<Joke | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -17,8 +21,12 @@ export default function GetJoke() {
           "Content-Type": "application/json",
         },
       });
+      if (!res.ok) {
+        throw new Error("Error fetching joke");
+      }
       const data = await res.json();
-      setJoke(data.setup + " " + data.delivery);
+      setData(data);
+      console.log(data);
     } catch (err) {
       setError("Error fetching joke");
     }
@@ -31,14 +39,18 @@ export default function GetJoke() {
 
   return (
     <Container fixed sx={{ textAlign: "center" }}>
-      <h1>Get a Joke</h1>
       <Button onClick={handleClick} variant="contained" color="primary">
-        Get Joke
+        Get A Joke
       </Button>
       <Stack spacing={2} sx={{ mt: 2, display: "flex", flexDirection: "column", alignItems: "center" }}>
         {loading ? <CircularProgress /> : null}
-        {error ? <p>{error}</p> : null}
-        {joke ? <p>{joke}</p> : null}
+        {error ? <Typography color="error">{error}</Typography> : null}
+        {data ? (
+          <div>
+            <Typography variant="h6">{data.setup}</Typography>
+            <Typography variant="h6">{data.delivery}</Typography>
+          </div>
+        ) : null}
       </Stack>
     </Container>
   );
