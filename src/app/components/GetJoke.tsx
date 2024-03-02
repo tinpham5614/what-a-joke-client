@@ -26,7 +26,6 @@ export default function GetJoke() {
       }
       const data = await res.json();
       setData(data);
-      console.log(data);
     } catch (err) {
       setError("Error fetching joke");
     }
