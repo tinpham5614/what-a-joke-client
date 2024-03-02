@@ -1,4 +1,4 @@
-import { Button, Container } from "@mui/material";
+import { Button, CircularProgress, Container, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 
 export default function GetJoke() {
@@ -27,15 +27,19 @@ export default function GetJoke() {
 
   const handleClick = () => {
     fetchJoke();
-  }
+  };
 
   return (
     <Container fixed sx={{ textAlign: "center" }}>
       <h1>Get a Joke</h1>
       <Button onClick={handleClick} variant="contained" color="primary">
         Get Joke
-        </Button>
-        {joke && <p>{joke}</p>}
+      </Button>
+      <Stack spacing={2} sx={{ mt: 2, display: "flex", flexDirection: "column", alignItems: "center" }}>
+        {loading ? <CircularProgress /> : null}
+        {error ? <p>{error}</p> : null}
+        {joke ? <p>{joke}</p> : null}
+      </Stack>
     </Container>
   );
 }
