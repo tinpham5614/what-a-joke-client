@@ -2,6 +2,7 @@ import { Button, CircularProgress, Container, Stack, Typography } from "@mui/mat
 import React, { useEffect, useState } from "react";
 
   interface Joke {
+    joke: string;
     setup: string;
     delivery: string;
   }
@@ -14,7 +15,7 @@ export default function GetJoke() {
   const fetchJoke = async () => {
     setLoading(true);
     try {
-      const apiURL = "https://v2.jokeapi.dev/joke/Programming?type=twopart";
+      const apiURL = "https://v2.jokeapi.dev/joke/Programming?blacklistFlags=racist,sexist";
       const res = await fetch(apiURL, {
         method: "GET",
         headers: {
@@ -50,6 +51,7 @@ export default function GetJoke() {
             <Typography variant="h6">{data.delivery}</Typography>
           </div>
         ) : null}
+        {data?.joke ? <div><Typography variant="h6">{data.joke}</Typography></div> : null}
       </Stack>
     </Container>
   );
