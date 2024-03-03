@@ -48,7 +48,7 @@ export default function DrawerAppBar(props: Props) {
         {navItems.map((item, index) => (
           <Grid item key={item}>
             <Link href={linkItems[index]} passHref>
-              <Button key={item} sx={{ color: "#000" }} onClick={handleDrawerToggle}>
+              <Button key={item} sx={{ color: "#fff" }} onClick={handleDrawerToggle}>
                 {item}
               </Button>
             </Link>

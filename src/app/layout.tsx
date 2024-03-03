@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import NavBar from "../app/components/NavBar";
-import { CssBaseline } from "@mui/material";
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import theme from "./theme/theme";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,11 +17,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-      <CssBaseline />
-        <NavBar />
-        {children}</body>
-    </html>
+    <ThemeProvider theme={theme}>
+      <CssBaseline enableColorScheme />
+      <html lang="en">
+        <body className={inter.className}>
+          <NavBar />
+          {children}
+        </body>
+      </html>
+    </ThemeProvider>
   );
 }
