@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
-import React, { useEffect, useRef, useState } from "react";
+import React, { use, useEffect, useRef, useState } from "react";
 import JokeCard from "./JokeCard";
 
 interface Joke {
@@ -59,8 +59,14 @@ export default function GetJoke() {
     }
   }, [shouldFetch]); // Include necessary dependencies
 
+  const isFav = useRef(false);
   const handleFavorite = () => {
-    setCountFavorite((prev) => prev + 1);
+    if (isFav.current) {
+      setCountFavorite((prev) => prev - 1);
+    } else {
+      setCountFavorite((prev) => prev + 1);
+    }
+    isFav.current = !isFav.current;
   };
 
   const handleShare = () => {
