@@ -1,5 +1,5 @@
-import { Button, CircularProgress, Container, Stack, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { Box, Button, Container, LinearProgress, Stack, Typography } from "@mui/material";
+import React, { useEffect, useRef, useState } from "react";
 
   interface Joke {
     joke: string;
@@ -33,17 +33,22 @@ export default function GetJoke() {
     setLoading(false);
   };
 
-  const handleClick = () => {
-    fetchJoke();
-  };
+  const shouldFetch = useRef(true); // Used to prevent multiple fetches
+  useEffect(() => {
+    // Fetch only on mount or when specific dependencies change
+    if (shouldFetch.current) {
+      shouldFetch.current = false; // Prevent multiple fetches
+      fetchJoke();
+    }
+  }, [shouldFetch]); // Include necessary dependencies
 
   return (
     <Container fixed sx={{ textAlign: "center" }}>
-      <Button onClick={handleClick} variant="contained" color="primary">
-        Get A Joke
-      </Button>
-      <Stack spacing={2} sx={{ mt: 2, display: "flex", flexDirection: "column", alignItems: "center" }}>
-        {loading ? <CircularProgress /> : null}
+      <Typography variant="h4" sx={{ mt: 2 }}>
+        Joke of the day
+      </Typography>
+      <Box sx = {{mt: 2, width: "100%"}}>{loading ? <LinearProgress /> : null}</Box>
+      <Stack spacing={2} sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
         {error ? <Typography color="error">{error}</Typography> : null}
         {data ? (
           <div>
