@@ -1,11 +1,18 @@
-import { Box, Button, Container, LinearProgress, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  LinearProgress,
+  Stack,
+  Typography,
+} from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 
-  interface Joke {
-    joke: string;
-    setup: string;
-    delivery: string;
-  }
+interface Joke {
+  joke: string;
+  setup: string;
+  delivery: string;
+}
 export default function GetJoke() {
   const [data, setData] = useState<Joke | null>(null);
   const [loading, setLoading] = useState(false);
@@ -15,7 +22,8 @@ export default function GetJoke() {
   const fetchJoke = async () => {
     setLoading(true);
     try {
-      const apiURL = "https://v2.jokeapi.dev/joke/Programming?blacklistFlags=racist,sexist";
+      const apiURL =
+        "https://v2.jokeapi.dev/joke/Programming?blacklistFlags=racist,sexist";
       const res = await fetch(apiURL, {
         method: "GET",
         headers: {
@@ -47,8 +55,13 @@ export default function GetJoke() {
       <Typography variant="h4" sx={{ mt: 2 }}>
         Joke of the day
       </Typography>
-      <Box sx = {{mt: 2, width: "100%"}}>{loading ? <LinearProgress /> : null}</Box>
-      <Stack spacing={2} sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+      <Box sx={{ mt: 2, width: "100%" }}>
+        {loading ? <LinearProgress /> : null}
+      </Box>
+      <Stack
+        spacing={2}
+        sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+      >
         {error ? <Typography color="error">{error}</Typography> : null}
         {data ? (
           <div>
@@ -56,7 +69,11 @@ export default function GetJoke() {
             <Typography variant="h6">{data.delivery}</Typography>
           </div>
         ) : null}
-        {data?.joke ? <div><Typography variant="h6">{data.joke}</Typography></div> : null}
+        {data?.joke ? (
+          <div>
+            <Typography variant="h6">{data.joke}</Typography>
+          </div>
+        ) : null}
       </Stack>
     </Container>
   );
