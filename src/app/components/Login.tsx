@@ -1,5 +1,5 @@
 import React from "react";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import {
   Button,
   Container,
@@ -10,16 +10,32 @@ import {
 
 import SignUpDialog from "./SignUpDialog";
 
-type UserInfo = {
+type LoginData = {
   email: string;
   password: string;
 };
 export default function Login() {
-  const { register, handleSubmit, reset } = useForm<UserInfo>();
+  const { register, handleSubmit, reset } = useForm<LoginData>();
 
-  const handleLogin = (data: UserInfo) => {
-    // TODO: send data to the server here to login
-    console.log(data);
+  const handleLogin:SubmitHandler<LoginData> = async (data) => {
+    const apiUrl = "http://localhost:3000/api/auth/login";
+    try {
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const result = await response.json();
+      localStorage.setItem("token", result.token);
+      console.log(result.token)
+    } catch (error) {
+      console.error("There was an error!", error);
+    }
     reset();
   };
   return (
@@ -42,8 +58,8 @@ export default function Login() {
           <Button variant="contained" type="submit" sx={{ marginTop: 2 }}>
             Login
           </Button>
-          <SignUpDialog />
         </form>
+        <SignUpDialog />
       </Paper>
     </Container>
   );
