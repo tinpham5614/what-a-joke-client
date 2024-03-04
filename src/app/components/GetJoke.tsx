@@ -26,6 +26,7 @@ export default function GetJoke() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [countFavorite, setCountFavorite] = useState(0);
+  const isFav = useRef(false);
 
   // fetch a joke from the API
   const fetchJoke = async () => {
@@ -59,12 +60,11 @@ export default function GetJoke() {
     }
   }, [shouldFetch]); // Include necessary dependencies
 
-  const isFav = useRef(false);
   const handleFavorite = () => {
     if (isFav.current) {
-      setCountFavorite((prev) => prev - 1);
+      setCountFavorite((prev) => prev - 1); // If it's already a favorite, remove it
     } else {
-      setCountFavorite((prev) => prev + 1);
+      setCountFavorite((prev) => prev + 1); // If it's not a favorite, add it
     }
     isFav.current = !isFav.current;
   };
