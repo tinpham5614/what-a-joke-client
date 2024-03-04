@@ -1,12 +1,20 @@
 import {
   Box,
   Button,
+  Card,
+  CardActions,
+  CardContent,
   Container,
+  Divider,
+  IconButton,
   LinearProgress,
   Stack,
   Typography,
 } from "@mui/material";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import ShareIcon from "@mui/icons-material/Share";
 import React, { useEffect, useRef, useState } from "react";
+import JokeCard from "./JokeCard";
 
 interface Joke {
   joke: string;
@@ -17,6 +25,7 @@ export default function GetJoke() {
   const [data, setData] = useState<Joke | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [countFavorite, setCountFavorite] = useState(0);
 
   // fetch a joke from the API
   const fetchJoke = async () => {
@@ -50,31 +59,69 @@ export default function GetJoke() {
     }
   }, [shouldFetch]); // Include necessary dependencies
 
+  const handleFavorite = () => {
+    setCountFavorite((prev) => prev + 1);
+  };
+
+  const handleShare = () => {
+    // TODO: Implement share functionality
+  };
+
   return (
-    <Container fixed sx={{ textAlign: "center" }}>
-      <Typography variant="h4" sx={{ mt: 2 }}>
-        Joke of the day
-      </Typography>
+    <Container fixed maxWidth="md" sx={{ textAlign: "center" }}>
+      <Typography variant="h4">Joke of the day</Typography>
       <Box sx={{ mt: 2, width: "100%" }}>
         {loading ? <LinearProgress /> : null}
       </Box>
-      <Stack
-        spacing={2}
-        sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
-      >
-        {error ? <Typography color="error">{error}</Typography> : null}
-        {data ? (
-          <div>
-            <Typography variant="h6">{data.setup}</Typography>
-            <Typography variant="h6">{data.delivery}</Typography>
-          </div>
-        ) : null}
-        {data?.joke ? (
-          <div>
-            <Typography variant="h6">{data.joke}</Typography>
-          </div>
-        ) : null}
-      </Stack>
+      <Card sx={{ minWidth: 275 }}>
+        <CardContent>
+          <Stack
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            {error ? <Typography color="error">{error}</Typography> : null}
+            {data ? (
+              <div>
+                <Typography variant="h6">{data.setup}</Typography>
+                <Typography variant="h6">{data.delivery}</Typography>
+              </div>
+            ) : null}
+            {data?.joke ? (
+              <div>
+                <Typography variant="h6">{data.joke}</Typography>
+              </div>
+            ) : null}
+          </Stack>
+          <Stack
+            direction="row"
+            sx={{ display: "flex", justifyContent: "end" }}
+          >
+            {data && !loading ? (
+              <CardActions disableSpacing>
+                <IconButton
+                  aria-label="add to favorites"
+                  onClick={handleFavorite}
+                >
+                  {countFavorite ? (
+                    <FavoriteIcon color="error" />
+                  ) : (
+                    <FavoriteIcon />
+                  )}
+                </IconButton>
+                <div>
+                  <Typography variant="subtitle2">{countFavorite}</Typography>
+                </div>
+                <IconButton aria-label="share" onClick={handleShare}>
+                  <ShareIcon />
+                </IconButton>
+              </CardActions>
+            ) : null}
+          </Stack>
+        </CardContent>
+      </Card>
     </Container>
   );
 }
