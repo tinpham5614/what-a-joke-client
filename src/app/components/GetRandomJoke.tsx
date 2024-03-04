@@ -1,11 +1,9 @@
 import {
   Box,
-  Button,
   Card,
   CardActions,
   CardContent,
   Container,
-  Divider,
   IconButton,
   LinearProgress,
   Stack,
@@ -13,15 +11,14 @@ import {
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
-import React, { use, useEffect, useRef, useState } from "react";
-import JokeCard from "./JokeCard";
+import React, { useEffect, useRef, useState } from "react";
 
 interface Joke {
   joke: string;
   setup: string;
   delivery: string;
 }
-export default function GetJoke() {
+export default function GetRandomJoke() {
   const [data, setData] = useState<Joke | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
