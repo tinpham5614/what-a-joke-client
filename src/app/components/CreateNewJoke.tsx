@@ -10,10 +10,24 @@ type Joke = {
 export default function CreateNewJoke() {
   const { register, handleSubmit, reset } = useForm<Joke>();
 
-  const onSubmit: SubmitHandler<Joke> = (data) => {
-    // TODO: send data to the server here
-    console.log(data);
-    reset();
+  const onSubmit: SubmitHandler<Joke> = async (data) => {
+    try {
+      const res = await fetch("http://localhost:3000/api/jokes/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) {
+        throw new Error("Error creating joke");
+      } else {
+        console.log("Joke created successfully");
+        reset();
+      }
+    } catch (err) {
+      console.error("Error creating joke", err);
+    }
   };
 
   return (
