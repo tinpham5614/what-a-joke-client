@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import NavBar from "../app/components/NavBar";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import theme from "./theme/theme";
+import CustomBox from "./components/CustomBox";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +23,7 @@ export default function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <NavBar />
-          {children}
+          <CustomBox>{children}</CustomBox>
         </body>
       </html>
     </ThemeProvider>
