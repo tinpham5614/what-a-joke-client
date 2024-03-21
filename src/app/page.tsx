@@ -1,18 +1,20 @@
 "use client";
 
 import GetRandomJoke from "./dashboard/GetRandomJoke";
-import { Container, Divider, Grid } from "@mui/material";
+import { Box, Divider, Grid } from "@mui/material";
 import CreateNewJoke from "./dashboard/CreateNewJoke";
 import Login from "./dashboard/Login";
 import GetJokes from "./dashboard/GetJokes";
-import FloatingActionButtons from "./components/FloatingButton";
 
 export default function Home() {
   return (
-    <Container
-      fixed
-      maxWidth="xl"
-      sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+    <Box
+      sx={{
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        minHeight: "100vh",
+      }}
     >
       <Grid
         container
@@ -42,6 +44,6 @@ export default function Home() {
           </Grid>
         </Grid>
       </Grid>
-    </Container>
+    </Box>
   );
 }
