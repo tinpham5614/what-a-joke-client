@@ -12,10 +12,12 @@ export default function CreateNewJoke() {
 
   const onSubmit: SubmitHandler<Joke> = async (data) => {
     try {
+      const token = localStorage.getItem("token");
       const res = await fetch("http://localhost:3000/api/jokes/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
         },
         body: JSON.stringify(data),
       });

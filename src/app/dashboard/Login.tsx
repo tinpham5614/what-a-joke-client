@@ -9,6 +9,8 @@ import {
 } from "@mui/material";
 
 import SignUpDialog from "./SignUpDialog";
+import ErrorAlert from "../components/ErrorAlert";
+import SuccessAlert from "../components/SuccessAlert";
 
 type LoginData = {
   email: string;
@@ -16,8 +18,25 @@ type LoginData = {
 };
 export default function Login() {
   const { register, handleSubmit, reset } = useForm<LoginData>();
+  const [error, setError] = React.useState("");
+  const [success, setSuccess] = React.useState("");
 
   const handleLogin:SubmitHandler<LoginData> = async (data) => {
+    if (!data.email || !data.password) {
+      setError("Email and password are required");
+      return;
+    }
+
+    if (!data.email.includes("@")) {
+      setError("Invalid email");
+      return;
+    }
+
+    if (data.password.length < 6) {
+      setError("Password must be at least 6 characters long");
+      return;
+    }
+
     const apiUrl = "http://localhost:3000/api/auth/login";
     try {
       const response = await fetch(apiUrl, {
@@ -28,11 +47,14 @@ export default function Login() {
         body: JSON.stringify(data),
       });
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        const { message } = await response.json();
+        setError(message);
+        return;
       }
       const result = await response.json();
       localStorage.setItem("token", result.token);
-      console.log(result.token)
+      setSuccess("Login successful");
+      setError("");
     } catch (error) {
       console.error("There was an error!", error);
     }
@@ -55,6 +77,8 @@ export default function Login() {
             type="password"
             {...register("password")}
           />
+          {error && <ErrorAlert message={error} />}
+          {success && <SuccessAlert message={success} />}
           <Button variant="contained" type="submit" sx={{ marginTop: 2 }}>
             Login
           </Button>
