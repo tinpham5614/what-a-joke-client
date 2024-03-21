@@ -1,10 +1,10 @@
 "use client";
 
-import GetJoke from "./components/GetRandomJoke";
+import GetRandomJoke from "./components/GetRandomJoke";
 import { Container, Divider, Grid } from "@mui/material";
 import CreateNewJoke from "./components/CreateNewJoke";
 import Login from "./components/Login";
-import JokeCard from "./components/JokeCard";
+import GetJokes from "./components/GetJokes";
 
 export default function Home() {
   return (
@@ -25,10 +25,10 @@ export default function Home() {
           <CreateNewJoke />
           <Divider sx={{ marginY: 2 }} />
           {/* Replace with GetJoke from backend */}
-          <JokeCard />
+          <GetJokes />
         </Grid>
         <Grid item xs={3}>
-          <GetJoke />
+          <GetRandomJoke />
         </Grid>
       </Grid>
     </Container>
