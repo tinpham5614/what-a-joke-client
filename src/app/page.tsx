@@ -23,9 +23,6 @@ export default function Home() {
           <Login />
         </Grid>
         <Grid item xs={6}>
-          <CreateNewJoke />
-          <Divider sx={{ marginY: 2 }} />
-          {/* Replace with GetJoke from backend */}
           <GetJokes />
         </Grid>
         <Grid item xs={3}>
@@ -34,7 +31,6 @@ export default function Home() {
           <Grid
             item
             xs={12}
-            // set the button to the bottom right
             sx={{
               position: "fixed",
               bottom: 0,
@@ -42,7 +38,7 @@ export default function Home() {
               margin: 2,
             }}
           >
-            <FloatingActionButtons />
+            <CreateNewJoke />
           </Grid>
         </Grid>
       </Grid>

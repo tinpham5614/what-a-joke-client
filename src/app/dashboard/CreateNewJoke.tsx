@@ -1,7 +1,15 @@
-import { Container, Button, OutlinedInput } from "@mui/material";
+import {
+  Container,
+  Button,
+  OutlinedInput,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+} from "@mui/material";
 import React from "react";
 import SendIcon from "@mui/icons-material/Send";
 import { SubmitHandler, useForm } from "react-hook-form";
+import FloatingActionButtons from "../components/FloatingButton";
 
 type Joke = {
   joke: string;
@@ -9,6 +17,15 @@ type Joke = {
 
 export default function CreateNewJoke() {
   const { register, handleSubmit, reset } = useForm<Joke>();
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const onSubmit: SubmitHandler<Joke> = async (data) => {
     try {
@@ -17,7 +34,7 @@ export default function CreateNewJoke() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(data),
       });
@@ -33,21 +50,35 @@ export default function CreateNewJoke() {
   };
 
   return (
-    <Container fixed sx={{ textAlign: "end" }}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <OutlinedInput
-          sx={{ display: "block" }}
-          placeholder="Do you have a joke? Share it here!"
-          rows={4}
-          multiline
-          {...register("joke")}
-          endAdornment={
-            <Button variant="contained" endIcon={<SendIcon />} type="submit">
-              Send
-            </Button>
-          }
-        />
-      </form>
-    </Container>
+    <>
+      <Container onClick={handleClickOpen}>
+        <FloatingActionButtons />
+      </Container>
+
+      <Dialog open={open} onClose={handleClose}>
+        <DialogContent
+          sx={{ display: "flex", flexDirection: "column", width: 550 }}
+        >
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <OutlinedInput
+              sx={{ display: "block" }}
+              placeholder="Do you have a joke? Share it here!"
+              rows={4}
+              multiline
+              {...register("joke")}
+            />
+            <Button
+                  variant="contained"
+                  endIcon={<SendIcon />}
+                  type="submit"
+                  sx={{ display: "flex", marginLeft: "auto", marginTop: 2}}
+                  disabled={false}
+                >
+                  Send
+                </Button>
+          </form>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }

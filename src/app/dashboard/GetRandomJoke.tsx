@@ -53,7 +53,7 @@ export default function GetRandomJoke() {
     // Fetch only on mount or when specific dependencies change
     if (shouldFetch.current) {
       shouldFetch.current = false; // Prevent multiple fetches
-      fetchJoke();
+      // fetchJoke();
     }
   }, [shouldFetch]); // Include necessary dependencies
 
