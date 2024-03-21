@@ -96,7 +96,7 @@ export default function FormDialog() {
       </Typography>
 
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Sign Up</DialogTitle>
+        <DialogTitle sx={{ textAlign: "center" }}>Sign Up</DialogTitle>
         <DialogContent
           sx={{ display: "flex", flexDirection: "column", width: 360 }}
         >
@@ -127,7 +127,7 @@ export default function FormDialog() {
             <Button
               variant="contained"
               type="submit"
-              sx={{ marginTop: 2, display: "flex", justifyContent: "center" }}
+              sx={{ marginTop: 2, display: "flex", justifyContent: "center", width: "100%"}}
             >
               Sign Up
             </Button>
