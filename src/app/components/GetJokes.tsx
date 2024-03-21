@@ -1,16 +1,9 @@
 import {
-  Box,
-  Card,
-  CardActions,
-  CardContent,
   Container,
-  IconButton,
   LinearProgress,
   Stack,
   Typography,
 } from "@mui/material";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
 import React, { useEffect, useState } from "react";
 import JokeCard from "./JokeCard";
 
@@ -78,7 +71,6 @@ export default function GetJokes() {
 
   return (
     <Container fixed maxWidth="md" sx={{ textAlign: "center" }}>
-      <Typography variant="h4">Joke of the day</Typography>
       {loading && <LinearProgress sx={{ mt: 2, width: "100%" }} />}
       {error && <Typography color="error">{error}</Typography>}
       {jokes && jokes.length > 0 ? (
