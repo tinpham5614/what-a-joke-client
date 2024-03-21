@@ -73,7 +73,7 @@ export default function GetJokes() {
     <Container fixed maxWidth="md" sx={{ textAlign: "center" }}>
       {loading && <LinearProgress sx={{ mt: 2, width: "100%" }} />}
       {error && <Typography color="error">{error}</Typography>}
-      {jokes && jokes.length > 0 ? (
+      {jokes && (
         <Stack spacing={2} sx={{ mt: 2 }}>
           {jokes.map((joke, index) => (
             <JokeCard
@@ -86,10 +86,6 @@ export default function GetJokes() {
             />
           ))}
         </Stack>
-      ) : (
-        <Typography variant="h6" sx={{ mt: 2 }}>
-          No jokes found
-        </Typography>
       )}
     </Container>
   );

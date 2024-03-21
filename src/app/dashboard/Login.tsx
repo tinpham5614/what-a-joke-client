@@ -1,12 +1,6 @@
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import {
-  Button,
-  Container,
-  Paper,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Button, Container, Paper, TextField, Typography } from "@mui/material";
 
 import SignUpDialog from "./SignUpDialog";
 import ErrorAlert from "../components/ErrorAlert";
@@ -17,11 +11,11 @@ type LoginData = {
   password: string;
 };
 export default function Login() {
-  const { register, handleSubmit, reset } = useForm<LoginData>();
+  const { register, handleSubmit, reset, watch } = useForm<LoginData>();
   const [error, setError] = React.useState("");
   const [success, setSuccess] = React.useState("");
 
-  const handleLogin:SubmitHandler<LoginData> = async (data) => {
+  const handleLogin: SubmitHandler<LoginData> = async (data) => {
     if (!data.email || !data.password) {
       setError("Email and password are required");
       return;
@@ -79,7 +73,14 @@ export default function Login() {
           />
           {error && <ErrorAlert message={error} />}
           {success && <SuccessAlert message={success} />}
-          <Button variant="contained" type="submit" sx={{ marginTop: 2 }}>
+          <Button
+            variant="contained"
+            type="submit"
+            sx={{ marginTop: 2 }}
+            disabled={
+              !(watch("email")?.length > 0) || !(watch("password")?.length > 0)
+            }
+          >
             Login
           </Button>
         </form>

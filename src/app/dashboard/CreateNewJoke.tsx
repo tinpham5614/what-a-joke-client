@@ -10,14 +10,18 @@ import React from "react";
 import SendIcon from "@mui/icons-material/Send";
 import { SubmitHandler, useForm } from "react-hook-form";
 import FloatingActionButtons from "../components/FloatingButton";
+import ErrorAlert from "../components/ErrorAlert";
+import SuccessAlert from "../components/SuccessAlert";
 
 type Joke = {
   joke: string;
 };
 
 export default function CreateNewJoke() {
-  const { register, handleSubmit, reset } = useForm<Joke>();
+  const { register, handleSubmit, reset, watch } = useForm<Joke>();
   const [open, setOpen] = React.useState(false);
+  const [error, setError] = React.useState("");
+  const [success, setSuccess] = React.useState("");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -39,11 +43,13 @@ export default function CreateNewJoke() {
         body: JSON.stringify(data),
       });
       if (!res.ok) {
-        throw new Error("Error creating joke");
-      } else {
-        console.log("Joke created successfully");
-        reset();
+        const { message } = await res.json();
+        setError(message);
+        return;
       }
+      setSuccess("Joke created successfully");
+      setError("");
+      window.location.reload();
     } catch (err) {
       console.error("Error creating joke", err);
     }
@@ -67,15 +73,17 @@ export default function CreateNewJoke() {
               multiline
               {...register("joke")}
             />
+            {error && <ErrorAlert message={error} />}
+            {success && <SuccessAlert message={success} />}
             <Button
-                  variant="contained"
-                  endIcon={<SendIcon />}
-                  type="submit"
-                  sx={{ display: "flex", marginLeft: "auto", marginTop: 2}}
-                  disabled={false}
-                >
-                  Send
-                </Button>
+              variant="contained"
+              endIcon={<SendIcon />}
+              type="submit"
+              sx={{ display: "flex", marginLeft: "auto", marginTop: 2 }}
+              disabled={!(watch("joke")?.length > 0)}
+            >
+              Send
+            </Button>
           </form>
         </DialogContent>
       </Dialog>

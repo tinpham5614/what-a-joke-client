@@ -7,6 +7,9 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Typography } from "@mui/material";
+import ErrorAlert from "../components/ErrorAlert";
+import { error } from 'console';
+import SuccessAlert from "../components/SuccessAlert";
 
 type SignUpData = {
   firstName: string;
@@ -18,6 +21,8 @@ type SignUpData = {
 
 export default function FormDialog() {
   const [open, setOpen] = React.useState(false);
+  const [error, setError] = React.useState("");
+  const [success, setSuccess] = React.useState("");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -33,9 +38,28 @@ export default function FormDialog() {
     handleSubmit,
     reset,
     watch,
-    formState: { errors },
   } = useForm<SignUpData>();
   const handleSignUp: SubmitHandler<SignUpData> = async (data) => {
+    if (!data.email || !data.password || !data.confirmPassword) {
+      setError("Please fill in all fields");
+      return;
+    }
+
+    if (!data.email.includes("@")) {
+      setError("Invalid email");
+      return;
+    }
+
+    if (data.password.length < 6) {
+      setError("Password must be at least 6 characters long");
+      return;
+    }
+
+    if (data.password !== data.confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
     const apiUrl = "http://localhost:3000/api/auth/signup";
     try {
       const response = await fetch(apiUrl, {
@@ -46,9 +70,13 @@ export default function FormDialog() {
         body: JSON.stringify(data),
       });
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        const { message } = await response.json();
+        setError(message);
+        return;
       }
-      const result = await response.json();
+      setSuccess("Sign up successful");
+      setError("");
+      window.location.reload();
     } catch (error) {
       console.error("There was an error!", error);
     }
@@ -75,26 +103,6 @@ export default function FormDialog() {
           <form onSubmit={handleSubmit(handleSignUp)}>
             <TextField
               id="outlined-required"
-              required
-              sx={{ display: "flex", marginTop: 2, width: "100%" }}
-              placeholder="First Name"
-              {...register("firstName")}
-            />
-            {errors.firstName && (
-              <Typography variant="caption" color="error">
-                First Name is required
-              </Typography>
-            )}
-            <TextField
-              id="outlined-required"
-              required
-              sx={{ display: "flex", marginTop: 2, width: "100%" }}
-              placeholder="Last Name"
-              {...register("lastName")}
-            />
-            <TextField
-              id="outlined-required"
-              required
               sx={{ display: "flex", marginTop: 2, width: "100%" }}
               placeholder="Email"
               type="email"
@@ -102,7 +110,6 @@ export default function FormDialog() {
             />
             <TextField
               id="outlined-required"
-              required
               sx={{ display: "flex", marginTop: 2, width: "100%" }}
               placeholder="Password"
               type="password"
@@ -110,12 +117,13 @@ export default function FormDialog() {
             />
             <TextField
               id="outlined-required"
-              required
               sx={{ display: "flex", marginTop: 2, width: "100%" }}
               placeholder="Confirm Password"
               type="password"
               {...register("confirmPassword")}
             />
+            {error && <ErrorAlert message={error} />}
+            {success && <SuccessAlert message={success} />}
             <Button
               variant="contained"
               type="submit"
