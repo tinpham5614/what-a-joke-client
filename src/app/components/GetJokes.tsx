@@ -15,7 +15,7 @@ import React, { useEffect, useState } from "react";
 import JokeCard from "./JokeCard";
 
 interface Joke {
-  id: string;
+  _id: string;
   joke: string;
   favoriteCount: number;
   isFavorite: boolean;
@@ -43,6 +43,7 @@ export default function GetJokes() {
       const jokes = await res.json();
       setJokes(jokes);
       setError("");
+      console.log(jokes)
     } catch (err) {
       setError("Error fetching joke");
       console.error("Error fetching joke", err);
@@ -57,7 +58,7 @@ export default function GetJokes() {
   const toggleFavorite = (id: string) => {
     setJokes(
       jokes.map((joke) => {
-        if (joke.id === id) {
+        if (joke._id === id) {
           return {
             ...joke,
             isFavorite: !joke.isFavorite,
@@ -85,11 +86,11 @@ export default function GetJokes() {
           {jokes.map((joke, index) => (
             <JokeCard
               key={index}
-              id={joke.id}
+              _id={joke._id}
               joke={joke.joke}
               favoriteCount={joke.favoriteCount}
               isFavorite={joke.isFavorite}
-              onFavorite={() => toggleFavorite(joke.id)}
+              onFavorite={() => toggleFavorite(joke._id)}
             />
           ))}
         </Stack>

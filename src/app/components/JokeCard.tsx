@@ -4,7 +4,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Card, CardContent, Typography } from "@mui/material";
 
 type Joke = {
-  id: string;
+  _id: string;
   joke: string;
   favoriteCount: number;
   isFavorite: boolean;
@@ -12,7 +12,7 @@ type Joke = {
 };
 
 export default function JokeCard({
-  id,
+  _id,
   joke,
   favoriteCount,
   isFavorite,
@@ -27,7 +27,7 @@ export default function JokeCard({
       </CardContent>
       <CardActions>
         <IconButton
-          onClick={() => onFavorite(id)}
+          onClick={() => onFavorite(_id)}
           color={isFavorite ? "secondary" : "default"}
         >
           <FavoriteIcon />
