@@ -1,6 +1,6 @@
 import { CardActions } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+import AddReactionIcon from "@mui/icons-material/AddReaction";
 import { Card, CardContent, Typography } from "@mui/material";
 import ShareIcon from "@mui/icons-material/Share";
 
@@ -29,9 +29,9 @@ export default function JokeCard({
       <CardActions sx={{ display: "flex", justifyContent: "end" }}>
         <IconButton
           onClick={() => onFavorite(_id)}
-          color={isFavorite ? "secondary" : "default"}
+          color={isFavorite ? "warning" : "default"}
         >
-          <FavoriteIcon />
+          <AddReactionIcon />
         </IconButton>
         <Typography variant="subtitle2" component="div">
           {favoriteCount}
