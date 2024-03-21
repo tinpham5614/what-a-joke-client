@@ -5,7 +5,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import JokeCard from "./JokeCard";
+import JokeCard from "../components/JokeCard";
 
 interface Joke {
   _id: string;

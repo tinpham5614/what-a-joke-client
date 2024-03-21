@@ -1,10 +1,10 @@
 "use client";
 
-import GetRandomJoke from "./components/GetRandomJoke";
+import GetRandomJoke from "./dashboard/GetRandomJoke";
 import { Container, Divider, Grid } from "@mui/material";
-import CreateNewJoke from "./components/CreateNewJoke";
-import Login from "./components/Login";
-import GetJokes from "./components/GetJokes";
+import CreateNewJoke from "./dashboard/CreateNewJoke";
+import Login from "./dashboard/Login";
+import GetJokes from "./dashboard/GetJokes";
 
 export default function Home() {
   return (
