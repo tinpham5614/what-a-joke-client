@@ -4,13 +4,8 @@ import GetRandomJoke from "./dashboard/GetRandomJoke";
 import { Box, Divider, Grid } from "@mui/material";
 import CreateNewJoke from "./dashboard/CreateNewJoke";
 import Login from "./dashboard/Login";
-import GetJokes from "./dashboard/GetJokes";
+import BasicTabs from "./components/NavTabs";
 
-/**
- * Renders the Home page component.
- * 
- * @returns The Home page component.
- */
 export default function Home() {
   return (
     // this is a grid layout with 3 columns
@@ -26,7 +21,7 @@ export default function Home() {
 
       {/* this is the second column */}
       <Grid item xs={6}>
-        <GetJokes />
+        <BasicTabs />
       </Grid>
 
       {/* this is the third column */}

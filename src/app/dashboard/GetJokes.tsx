@@ -36,7 +36,6 @@ export default function GetJokes() {
       const jokes = await res.json();
       setJokes(jokes);
       setError("");
-      console.log(jokes)
     } catch (err) {
       setError("Error fetching joke");
       console.error("Error fetching joke", err);
