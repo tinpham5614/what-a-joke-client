@@ -46,9 +46,12 @@ export default function Login() {
         return;
       }
       const result = await response.json();
-      localStorage.setItem("token", result.token);
+      const { token, sub } = result;
+      localStorage.setItem("token", token);
+      localStorage.setItem("sub", sub);
       setSuccess("Login successful");
       setError("");
+      window.location.reload();
     } catch (error) {
       console.error("There was an error!", error);
     }

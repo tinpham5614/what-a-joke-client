@@ -6,7 +6,7 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import GetJokes from "../dashboard/GetJokes";
-import GetRandomJoke from "../dashboard/GetRandomJoke";
+import GetUsersJokes from "../dashboard/GetUsersJokes";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -64,7 +64,7 @@ export default function BasicTabs() {
         <GetJokes />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <GetRandomJoke />
+        <GetUsersJokes />
       </CustomTabPanel>
     </Box>
   );
