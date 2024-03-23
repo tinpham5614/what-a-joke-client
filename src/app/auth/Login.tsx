@@ -11,10 +11,10 @@ type LoginData = {
   password: string;
 };
 
-const mockUser = {
-  email: "user@gmail.com",
-  password: "qweqwe",
-};
+// const mockUser = {
+//   email: "user@gmail.com",
+//   password: "qweqwe",
+// };
 export default function Login() {
   const { register, handleSubmit, reset, watch } = useForm<LoginData>();
   const [error, setError] = React.useState("");
@@ -71,7 +71,7 @@ export default function Login() {
             sx={{ display: "flex", marginTop: 2, width: "100%" }}
             placeholder="Email"
             {...register("email")}
-            value={mockUser.email} // for development purposes
+            // value={mockUser.email} // for development purposes
           />
           <TextField
             id="outlined-required"
@@ -79,7 +79,7 @@ export default function Login() {
             placeholder="Password"
             type="password"
             {...register("password")}
-            value={mockUser.password} // for development purposes
+            // value={mockUser.password} // for development purposes
           />
           {error && <ErrorAlert message={error} />}
           {success && <SuccessAlert message={success} />}
