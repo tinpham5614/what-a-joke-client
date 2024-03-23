@@ -3,7 +3,7 @@
 import GetRandomJoke from "./dashboard/GetRandomJoke";
 import { Box, Divider, Grid } from "@mui/material";
 import CreateNewJoke from "./dashboard/CreateNewJoke";
-import Login from "./dashboard/Login";
+import Login from "./auth/Login";
 import BasicTabs from "./components/NavTabs";
 
 export default function Home() {

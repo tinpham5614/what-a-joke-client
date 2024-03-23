@@ -17,7 +17,7 @@ export default function GetUsersJokes() {
     setLoading(false);
     try {
       const userId = localStorage.getItem("sub") || "";
-      const apiURL = process.env.NEXT_PUBLIC_JOKE_API_URL + `/user/${userId}`;
+      const apiURL = process.env.NEXT_PUBLIC_JOKE_API_URL + `/user/${userId}` || "";
       const token = localStorage.getItem("token") || "";
       const res = await fetch(apiURL, {
         method: "GET",

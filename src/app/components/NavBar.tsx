@@ -16,6 +16,7 @@ import Link from "next/link";
 import { Grid } from "@mui/material";
 import logo from "../images/logo.jpg";
 import Image from "next/image";
+import AuthProfileMenu from "./AuthProfileMenu";
 
 interface Props {
   /**
@@ -36,7 +37,7 @@ export default function DrawerAppBar(props: Props) {
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
-
+  const token = localStorage.getItem("token");
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Link href="/" passHref>
@@ -55,6 +56,7 @@ export default function DrawerAppBar(props: Props) {
                 {item}
               </Button>
             </Link>
+            <AuthProfileMenu />
           </Grid>
         ))}
       </List>
@@ -79,9 +81,9 @@ export default function DrawerAppBar(props: Props) {
             <MenuIcon />
           </IconButton>
           <Box sx={{ flexGrow: 1 }}>
-          <Link href="/" passHref>
-            <Image src={logo} alt="What A Joke" width={100} height={50} />
-          </Link>
+            <Link href="/" passHref>
+              <Image src={logo} alt="What A Joke" width={100} height={50} />
+            </Link>
           </Box>
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             <Grid container spacing={2} justifyContent="flex-end">
@@ -96,6 +98,7 @@ export default function DrawerAppBar(props: Props) {
               ))}
             </Grid>
           </Box>
+          {token ? <AuthProfileMenu /> : null}
         </Toolbar>
       </AppBar>
       <nav>
