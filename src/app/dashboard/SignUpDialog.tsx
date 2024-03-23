@@ -60,7 +60,7 @@ export default function FormDialog() {
       return;
     }
 
-    const apiUrl = "http://localhost:3000/api/auth/signup";
+    const apiUrl = process.env.NEXT_PUBLIC_AUTH_API_URL + "/signup";
     try {
       const response = await fetch(apiUrl, {
         method: "POST",

@@ -13,7 +13,7 @@ interface Joke {
   favoriteCount: number;
   isFavorite: boolean;
 }
-const apiURL = "http://localhost:3000/api/jokes/";
+const apiURL = `${process.env.NEXT_PUBLIC_JOKE_API_URL}`;
 
 export default function GetJokes() {
   const [jokes, setJokes] = useState<Joke[]>([]);

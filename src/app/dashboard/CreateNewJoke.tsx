@@ -34,7 +34,8 @@ export default function CreateNewJoke() {
   const onSubmit: SubmitHandler<Joke> = async (data) => {
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("http://localhost:3000/api/jokes/create", {
+      const apiUrl = process.env.NEXT_PUBLIC_JOKE_API_URL + "/create";
+      const res = await fetch(apiUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

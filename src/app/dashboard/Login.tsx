@@ -10,6 +10,11 @@ type LoginData = {
   email: string;
   password: string;
 };
+
+const mockUser = {
+  email: "user@gmail.com",
+  password: "qweqwe",
+};
 export default function Login() {
   const { register, handleSubmit, reset, watch } = useForm<LoginData>();
   const [error, setError] = React.useState("");
@@ -31,8 +36,8 @@ export default function Login() {
       return;
     }
 
-    const apiUrl = "http://localhost:3000/api/auth/login";
     try {
+      const apiUrl = process.env.NEXT_PUBLIC_AUTH_API_URL + "/login";
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
@@ -66,6 +71,7 @@ export default function Login() {
             sx={{ display: "flex", marginTop: 2, width: "100%" }}
             placeholder="Email"
             {...register("email")}
+            value={mockUser.email} // for development purposes
           />
           <TextField
             id="outlined-required"
@@ -73,6 +79,7 @@ export default function Login() {
             placeholder="Password"
             type="password"
             {...register("password")}
+            value={mockUser.password} // for development purposes
           />
           {error && <ErrorAlert message={error} />}
           {success && <SuccessAlert message={success} />}
@@ -80,9 +87,9 @@ export default function Login() {
             variant="contained"
             type="submit"
             sx={{ marginTop: 2 }}
-            disabled={
-              !(watch("email")?.length > 0) || !(watch("password")?.length > 0)
-            }
+            // disabled={
+            //   !(watch("email")?.length > 0) || !(watch("password")?.length > 0)
+            // }
           >
             Login
           </Button>
