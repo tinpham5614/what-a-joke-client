@@ -1,42 +1,46 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function useAuth() {
+interface User {
+  token: string;
+  sub: string;
+  subRole: string;
+}
+
+const useAuth = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState({
-    token: "",
-    sub: "",
-    subRole: "",
-  });
+  const [user, setUser] = useState<User | null>(null);
 
-  const CheckTokenValidity = () => {
-    const token = localStorage.getItem("token");
-    const subRole = localStorage.getItem("subRole");
-    const sub = localStorage.getItem("sub");
+  useEffect(() => {
+    const checkTokenValidity = () => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        setIsAuthenticated(true);
+        const sub = localStorage.getItem("sub");
+        const subRole = localStorage.getItem("subRole");
+        setUser({
+          token: token,
+          sub: sub as string,
+          subRole: subRole as string,
+        });
+      } else {
+        setIsAuthenticated(false);
+        setUser(null);
+      }
+    };
 
-    setIsAuthenticated(!!token && !!subRole && !!sub);
-    if (token && subRole && sub) {
-      setUser({
-        token: token || "",
-        sub: sub || "",
-        subRole: subRole || "",
-      });
-    } else {
-      setIsAuthenticated(false);
-      setUser({
-        token: "",
-        sub: "",
-        subRole: "",
-      });
-    }
+    checkTokenValidity(); // Call the function to check the token validity
 
     const handleStorageChange = () => {
-      CheckTokenValidity();
+      checkTokenValidity(); // Re-check the token validity if the 'auth-change' event is dispatched
     };
 
-    window.addEventListener("storage", handleStorageChange);
+    window.addEventListener("auth-change", handleStorageChange);
     return () => {
-      window.removeEventListener("storage", handleStorageChange);
+      window.removeEventListener("auth-change", handleStorageChange);
     };
-  };
+  }, []); // Ensure the effect has no dependencies and thus runs only once on mount
+
   return { isAuthenticated, user };
 }
+
+export default useAuth;

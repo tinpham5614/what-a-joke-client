@@ -19,7 +19,8 @@ export default function AuthProfileMenu() {
   const handleLogOut = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("sub");
-    router.push("/login");
+    router.push("/");
+    window.dispatchEvent(new Event("auth-change"));
   }
   return (
     <Fragment>

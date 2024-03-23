@@ -34,14 +34,14 @@ const linkItems = ["/", "/about", "/contact"];
 export default function DrawerAppBar(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const {isAuthenticated, user } = useAuth();
+  const { isAuthenticated } = useAuth();
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
   
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
+    <Box sx={{ textAlign: "center" }}>
       <Link href="/" passHref>
         <Image src={logo} alt="What A Joke" />
       </Link>
@@ -58,10 +58,14 @@ export default function DrawerAppBar(props: Props) {
                 {item}
               </Button>
             </Link>
-            {isAuthenticated ? <AuthProfileMenu /> : null}
           </Grid>
         ))}
       </List>
+      <Divider />
+      <Grid item sx={{ display: "flex", justifyContent: "center" }}>
+      {isAuthenticated ? <AuthProfileMenu /> : null}
+      </Grid>
+
     </Box>
   );
 
