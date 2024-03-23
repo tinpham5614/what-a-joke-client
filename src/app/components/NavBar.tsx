@@ -17,6 +17,7 @@ import { Grid } from "@mui/material";
 import logo from "../images/logo.jpg";
 import Image from "next/image";
 import AuthProfileMenu from "./AuthProfileMenu";
+import useAuth from "../hooks/useAuth";
 
 interface Props {
   /**
@@ -33,11 +34,12 @@ const linkItems = ["/", "/about", "/contact"];
 export default function DrawerAppBar(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const {isAuthenticated, user } = useAuth();
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
-  const token = localStorage.getItem("token");
+  
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Link href="/" passHref>
@@ -56,7 +58,7 @@ export default function DrawerAppBar(props: Props) {
                 {item}
               </Button>
             </Link>
-            <AuthProfileMenu />
+            {isAuthenticated ? <AuthProfileMenu /> : null}
           </Grid>
         ))}
       </List>
@@ -98,7 +100,7 @@ export default function DrawerAppBar(props: Props) {
               ))}
             </Grid>
           </Box>
-          {token ? <AuthProfileMenu /> : null}
+          {isAuthenticated ? <AuthProfileMenu /> : null}
         </Toolbar>
       </AppBar>
       <nav>

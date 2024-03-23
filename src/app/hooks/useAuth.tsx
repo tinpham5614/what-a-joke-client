@@ -1,33 +1,42 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function useAuth() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [userRole, setUserRole] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [user, setUser] = useState({
+    token: "",
+    sub: "",
+    subRole: "",
+  });
 
   const CheckTokenValidity = () => {
     const token = localStorage.getItem("token");
     const subRole = localStorage.getItem("subRole");
+    const sub = localStorage.getItem("sub");
 
-    if (token && subRole) {
-      setIsAuthenticated(true);
-      setUserRole(subRole);
+    setIsAuthenticated(!!token && !!subRole && !!sub);
+    if (token && subRole && sub) {
+      setUser({
+        token: token || "",
+        sub: sub || "",
+        subRole: subRole || "",
+      });
     } else {
       setIsAuthenticated(false);
-      setUserRole("");
+      setUser({
+        token: "",
+        sub: "",
+        subRole: "",
+      });
     }
-    useEffect(() => {
-      setIsLoading(true);
+
+    const handleStorageChange = () => {
       CheckTokenValidity();
-      setIsLoading(false);
-      const handleAuthChange = () => {
-        CheckTokenValidity();
-      };
-      window.addEventListener("storage", handleAuthChange);
-      return () => {
-        window.removeEventListener("storage", handleAuthChange);
-      };
-    }, []);
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
   };
-  return { isAuthenticated, userRole, isLoading };
+  return { isAuthenticated, user };
 }
