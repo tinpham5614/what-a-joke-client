@@ -1,9 +1,4 @@
-import {
-  Container,
-  LinearProgress,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Container, LinearProgress, Stack, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import JokeCard from "../components/JokeCard";
 
@@ -44,7 +39,9 @@ export default function GetJokes() {
   };
 
   useEffect(() => {
-    fetchJoke();
+    return () => { // cleanup function
+      fetchJoke();
+    };
   }, []);
 
   const toggleFavorite = (id: string) => {

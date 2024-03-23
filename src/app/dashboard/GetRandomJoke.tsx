@@ -48,14 +48,11 @@ export default function GetRandomJoke() {
     setLoading(false);
   };
 
-  const shouldFetch = useRef(true); // Used to prevent multiple fetches
   useEffect(() => {
-    // Fetch only on mount or when specific dependencies change
-    if (shouldFetch.current) {
-      shouldFetch.current = false; // Prevent multiple fetches
-      fetchJoke();
+    return () => {
+      fetchJoke()
     }
-  }, [shouldFetch]); // Include necessary dependencies
+  }, []);
 
   const handleFavorite = () => {
     if (isFav.current) {
