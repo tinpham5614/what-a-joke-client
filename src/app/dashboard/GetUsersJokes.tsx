@@ -4,6 +4,7 @@ import JokeCard from "../components/JokeCard";
 
 interface Joke {
   joke: string;
+  favoriteCount: number;
 }
 
 export default function GetUsersJokes() {
@@ -56,7 +57,7 @@ export default function GetUsersJokes() {
               key={index}
               joke={joke.joke}
               _id={""}
-              favoriteCount={0}
+              favoriteCount={joke.favoriteCount}
               isFavorite={false}
               onFavorite={function (id: string): void {
                 throw new Error("Function not implemented.");
