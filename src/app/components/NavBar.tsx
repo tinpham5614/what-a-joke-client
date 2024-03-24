@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import React, { createElement } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -18,6 +18,9 @@ import logo from "../images/logo.jpg";
 import Image from "next/image";
 import AuthProfileMenu from "./AuthProfileMenu";
 import useAuth from "../hooks/useAuth";
+import HomeIcon from "@mui/icons-material/Home";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
+import ContactPageIcon from "@mui/icons-material/ContactPage";
 
 interface Props {
   /**
@@ -30,6 +33,10 @@ interface Props {
 const drawerWidth = 240;
 const navItems = ["Home", "Documentation", "Contact"];
 const linkItems = ["/", "/pages/doc", "/pages/contact"];
+const homeIcon = HomeIcon;
+const docIcon = MenuBookIcon;
+const contactIcon = ContactPageIcon;
+const iconItems = [homeIcon, docIcon, contactIcon];
 
 export default function DrawerAppBar(props: Props) {
   const { window } = props;
@@ -39,7 +46,7 @@ export default function DrawerAppBar(props: Props) {
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
-  
+
   const drawer = (
     <Box sx={{ textAlign: "center" }}>
       <Link href="/" passHref>
@@ -63,9 +70,8 @@ export default function DrawerAppBar(props: Props) {
       </List>
       <Divider />
       <Grid item sx={{ display: "flex", justifyContent: "center" }}>
-      {isAuthenticated ? <AuthProfileMenu /> : null}
+        {isAuthenticated ? <AuthProfileMenu /> : null}
       </Grid>
-
     </Box>
   );
 
@@ -96,7 +102,11 @@ export default function DrawerAppBar(props: Props) {
               {navItems.map((item, index) => (
                 <Grid item key={item} sx={{ display: "flex" }}>
                   <Link href={linkItems[index]} passHref>
-                    <Button key={item} sx={{ color: "#fff" }}>
+                    <Button
+                      key={item}
+                      sx={{ color: "#fff" }}
+                      startIcon={createElement(iconItems[index])}
+                    >
                       {item}
                     </Button>
                   </Link>
