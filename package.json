@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "type-check": "tsc",
-    "test": "jest tests/unit"
+    "unit:tests": "jest tests/unit"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
