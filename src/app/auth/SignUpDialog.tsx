@@ -76,7 +76,7 @@ export default function FormDialog() {
       }
       setSuccess("Sign up successful");
       setError("");
-      window.location.reload();
+      handleClose();
     } catch (error) {
       console.error("There was an error!", error);
     }

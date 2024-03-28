@@ -50,7 +50,7 @@ export default function CreateNewJoke() {
       }
       setSuccess("Joke created successfully");
       setError("");
-      window.location.reload();
+      handleClose();
     } catch (err) {
       console.error("Error creating joke", err);
     }
