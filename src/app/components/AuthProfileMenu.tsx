@@ -1,9 +1,8 @@
 "use client";
 import { PersonAdd, Settings, Logout } from "@mui/icons-material";
-import { Avatar, Box, Divider, IconButton, Link, ListItemIcon, Menu, MenuItem, Tooltip, Typography } from "@mui/material";
+import { Avatar, Box, Divider, IconButton, Link as MuiLink, ListItemIcon, Menu, MenuItem, Tooltip, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import React, { Fragment } from "react";
-
 export default function AuthProfileMenu() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -74,18 +73,12 @@ export default function AuthProfileMenu() {
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
         <MenuItem onClick={handleClose}>
-          <Avatar /> Profile
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <Avatar /> My account
+        <Avatar />
+          <MuiLink href="/pages/profile" underline="none" color="inherit">
+             Profile
+          </MuiLink>
         </MenuItem>
         <Divider />
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <PersonAdd fontSize="small" />
-          </ListItemIcon>
-          Add another account
-        </MenuItem>
         <MenuItem onClick={handleClose}>
           <ListItemIcon>
             <Settings fontSize="small" />
