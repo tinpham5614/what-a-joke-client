@@ -10,7 +10,12 @@ type LoginData = {
   email: string;
   password: string;
 };
-
+const message = {
+  fieldRequired: "Email and password are required",
+  passwordError: "Password must be at least 6 characters long",
+  emailInvalid: "Invalid email",
+  success: "Login successful",
+};
 const mockUser = {
   email: "user@gmail.com",
   password: "qweqwe",
@@ -22,17 +27,17 @@ export default function Login() {
 
   const handleLogin: SubmitHandler<LoginData> = async (data) => {
     if (!data.email || !data.password) {
-      setError("Email and password are required");
+      setError(message.fieldRequired);
       return;
     }
 
     if (!data.email.includes("@")) {
-      setError("Invalid email");
+      setError(message.emailInvalid);
       return;
     }
 
     if (data.password.length < 6) {
-      setError("Password must be at least 6 characters long");
+      setError(message.passwordError);
       return;
     }
 
@@ -54,9 +59,8 @@ export default function Login() {
       const { token, sub } = result;
       localStorage.setItem("token", token);
       localStorage.setItem("sub", sub);
-      setSuccess("Login successful");
-      setError("");
-      window.location.reload();
+      setSuccess(message.success);
+      window.dispatchEvent(new Event("auth-change"));
     } catch (error) {
       console.error("There was an error!", error);
     }
