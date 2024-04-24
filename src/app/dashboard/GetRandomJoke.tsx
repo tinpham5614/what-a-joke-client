@@ -9,7 +9,6 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import React, { useEffect, useRef, useState } from "react";
 
@@ -22,8 +21,6 @@ export default function GetRandomJoke() {
   const [data, setData] = useState<Joke | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [countFavorite, setCountFavorite] = useState(0);
-  const isFav = useRef(false);
 
   // fetch a joke from the API
   const fetchJoke = async () => {
@@ -50,18 +47,9 @@ export default function GetRandomJoke() {
 
   useEffect(() => {
     return () => {
-      fetchJoke()
-    }
+      fetchJoke();
+    };
   }, []);
-
-  const handleFavorite = () => {
-    if (isFav.current) {
-      setCountFavorite((prev) => prev - 1); // If it's already a favorite, remove it
-    } else {
-      setCountFavorite((prev) => prev + 1); // If it's not a favorite, add it
-    }
-    isFav.current = !isFav.current;
-  };
 
   const handleShare = () => {
     // TODO: Implement share functionality
@@ -69,7 +57,14 @@ export default function GetRandomJoke() {
 
   return (
     <Container fixed maxWidth="md" sx={{ textAlign: "center" }}>
-      <Typography variant="h4">Joke of the day</Typography>
+      <Typography variant="h5">
+        Are you not{" "}
+        <Typography component="span" variant="h4" sx={{ backgroundColor: "primary.main", color: "white", padding: 1, borderRadius: 1 }}>
+          {" "}
+          entertained
+        </Typography>{" "}
+        ?
+      </Typography>
       <Box sx={{ mt: 2, width: "100%" }}>
         {loading ? <LinearProgress /> : null}
       </Box>
@@ -101,19 +96,6 @@ export default function GetRandomJoke() {
           >
             {data && !loading ? (
               <CardActions disableSpacing>
-                <IconButton
-                  aria-label="add to favorites"
-                  onClick={handleFavorite}
-                >
-                  {countFavorite ? (
-                    <FavoriteIcon color="error" />
-                  ) : (
-                    <FavoriteIcon />
-                  )}
-                </IconButton>
-                <div>
-                  <Typography variant="subtitle2">{countFavorite}</Typography>
-                </div>
                 <IconButton aria-label="share" onClick={handleShare}>
                   <ShareIcon />
                 </IconButton>
