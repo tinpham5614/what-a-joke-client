@@ -88,14 +88,14 @@ export default function Login() {
             id="outlined-required"
             sx={{ display: "flex", marginTop: 2, width: "100%" }}
             placeholder="Email"
-            value={mockUser.email}
+            value={mockUser.email} // mock email for testing
             {...register("email")}
           />
           <TextField
             id="outlined-required"
             sx={{ display: "flex", marginTop: 2, width: "100%" }}
             placeholder="Password"
-            value={mockUser.password}
+            value={mockUser.password} // mock password for testing
             type="password"
             {...register("password")}
           />
