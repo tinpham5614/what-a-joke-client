@@ -1,10 +1,10 @@
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Button, Container, Paper, TextField, Typography } from "@mui/material";
-
+import { Button, Container, Paper, TextField } from "@mui/material";
 import SignUpDialog from "./SignUpDialog";
 import ErrorAlert from "../components/ErrorAlert";
 import SuccessAlert from "../components/SuccessAlert";
+import useAuth from "../hooks/useAuth";
 
 type LoginData = {
   email: string;
@@ -24,8 +24,14 @@ export default function Login() {
   const { register, handleSubmit, reset, watch } = useForm<LoginData>();
   const [error, setError] = React.useState("");
   const [success, setSuccess] = React.useState("");
+  const { isAuthenticated } = useAuth();
 
   const handleLogin: SubmitHandler<LoginData> = async (data) => {
+    if (isAuthenticated) {
+      setError("You are already logged in");
+      return;
+    }
+
     if (!data.email || !data.password) {
       setError(message.fieldRequired);
       return;
