@@ -79,9 +79,7 @@ export default function FormDialog() {
       </Button>
 
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle sx={{ textAlign: "center" }}>
-          <Typography variant="h5">Change Password</Typography>
-        </DialogTitle>
+        <DialogTitle sx={{ textAlign: "center" }}>Change Password</DialogTitle>
         <DialogContent
           sx={{ display: "flex", flexDirection: "column", width: 360 }}
         >

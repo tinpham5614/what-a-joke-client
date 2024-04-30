@@ -37,7 +37,7 @@ export default function Contribute() {
       <Container sx={{ mt: 2 }}>
         {contributeSteps.map((step, index) => (
           <Container key={index}>
-            <Typography key={index} variant="body1">
+            <Typography variant="body1">
               {index + 1}. {step}
             </Typography>
             <Paper key={index} sx={{ p: 2, mt: 2 }}>
