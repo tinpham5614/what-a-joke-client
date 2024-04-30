@@ -24,6 +24,10 @@ const message = {
   emailInvalid: "Invalid email",
   success: "Login successful",
 };
+const mockUser = {
+  email: process.env.NEXT_PUBLIC_MOCK_USER_EMAIL,
+  password: process.env.NEXT_PUBLIC_MOCK_USER_PASSWORD,
+}
 
 export default function Login() {
   const { register, handleSubmit, reset, watch } = useForm<LoginData>();
@@ -84,12 +88,14 @@ export default function Login() {
             id="outlined-required"
             sx={{ display: "flex", marginTop: 2, width: "100%" }}
             placeholder="Email"
+            value={mockUser.email}
             {...register("email")}
           />
           <TextField
             id="outlined-required"
             sx={{ display: "flex", marginTop: 2, width: "100%" }}
             placeholder="Password"
+            value={mockUser.password}
             type="password"
             {...register("password")}
           />
