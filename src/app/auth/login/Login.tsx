@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Button, Container, Paper, TextField } from "@mui/material";
-import SignUpDialog from "./SignUpDialog";
-import ErrorAlert from "../components/ErrorAlert";
-import SuccessAlert from "../components/SuccessAlert";
-import useAuth from "../hooks/useAuth";
+import {
+  Button,
+  CircularProgress,
+  Container,
+  Paper,
+  TextField,
+  Grid,
+} from "@mui/material";
+import SignUpDialog from "../SignUpDialog";
+import ErrorAlert from "../../components/ErrorAlert";
+import SuccessAlert from "../../components/SuccessAlert";
+import useAuth from "../../hooks/useAuth";
+import validateLogin from "./validationLogin";
 
 type LoginData = {
   email: string;
@@ -16,38 +24,31 @@ const message = {
   emailInvalid: "Invalid email",
   success: "Login successful",
 };
-const mockUser = {
-  email: "user@gmail.com",
-  password: "qweqwe",
-};
+
 export default function Login() {
   const { register, handleSubmit, reset, watch } = useForm<LoginData>();
-  const [error, setError] = React.useState("");
-  const [success, setSuccess] = React.useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { isAuthenticated } = useAuth();
 
   const handleLogin: SubmitHandler<LoginData> = async (data) => {
+    setError(null); // reset error
+    setSuccess(null); // reset success
+
     if (isAuthenticated) {
       setError("You are already logged in");
       return;
     }
 
-    if (!data.email || !data.password) {
-      setError(message.fieldRequired);
-      return;
-    }
-
-    if (!data.email.includes("@")) {
-      setError(message.emailInvalid);
-      return;
-    }
-
-    if (data.password.length < 6) {
-      setError(message.passwordError);
+    const errorMessage = validateLogin(data);
+    if (errorMessage) {
+      setError(errorMessage);
       return;
     }
 
     try {
+      setIsLoading(true);
       const apiUrl = process.env.NEXT_PUBLIC_AUTH_API_URL + "/login";
       const response = await fetch(apiUrl, {
         method: "POST",
@@ -69,9 +70,12 @@ export default function Login() {
       window.dispatchEvent(new Event("auth-change"));
     } catch (error) {
       console.error("There was an error!", error);
+    } finally {
+      setIsLoading(false);
     }
     reset();
   };
+
   return (
     <Container fixed>
       <Paper elevation={3} sx={{ padding: 3, textAlign: "center" }}>
@@ -81,7 +85,6 @@ export default function Login() {
             sx={{ display: "flex", marginTop: 2, width: "100%" }}
             placeholder="Email"
             {...register("email")}
-            value={mockUser.email} // for development purposes
           />
           <TextField
             id="outlined-required"
@@ -89,7 +92,6 @@ export default function Login() {
             placeholder="Password"
             type="password"
             {...register("password")}
-            value={mockUser.password} // for development purposes
           />
           {error && <ErrorAlert message={error} />}
           {success && <SuccessAlert message={success} />}
@@ -98,10 +100,13 @@ export default function Login() {
             type="submit"
             sx={{ marginTop: 2 }}
             // disabled={
-            //   !(watch("email")?.length > 0) || !(watch("password")?.length > 0)
-            // }
-          >
+              //   !(watch("email")?.length > 0) || !(watch("password")?.length > 0)
+              // }
+              >
             Login
+            <Grid item>
+              {isLoading && <CircularProgress size={24} />}
+            </Grid>
           </Button>
         </form>
         <SignUpDialog />
