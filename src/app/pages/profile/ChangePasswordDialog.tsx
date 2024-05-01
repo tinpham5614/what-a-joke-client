@@ -14,10 +14,6 @@ import SuccessAlert from "../../components/SuccessAlert";
 import useAuth from "@/app/hooks/useAuth";
 import InputValidation from "./InputValidation";
 
-// api and token
-const apiUrl = process.env.NEXT_PUBLIC_AUTH_API_URL + "/change-password";
-const token = localStorage.getItem("token");
-
 type ChangePasswordData = {
   currentPassword: string;
   newPassword: string;
@@ -54,6 +50,9 @@ export default function FormDialog() {
     }
 
     try {
+      // api and token
+      const apiUrl = process.env.NEXT_PUBLIC_AUTH_API_URL + "/change-password";
+      const token = localStorage.getItem("token");
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
