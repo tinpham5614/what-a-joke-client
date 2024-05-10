@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -8,7 +8,6 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Typography } from "@mui/material";
 import ErrorAlert from "../../components/ErrorAlert";
 import SuccessAlert from "../../components/SuccessAlert";
 import useAuth from "@/app/hooks/useAuth";
@@ -21,9 +20,9 @@ type ChangePasswordData = {
 };
 
 export default function FormDialog() {
-  const [open, setOpen] = React.useState(false);
-  const [error, setError] = React.useState("");
-  const [success, setSuccess] = React.useState("");
+  const [open, setOpen] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
   const { isAuthenticated } = useAuth();
 
   const handleClickOpen = () => {
@@ -38,6 +37,9 @@ export default function FormDialog() {
   const { register, handleSubmit, reset, watch } =
     useForm<ChangePasswordData>();
   const handleSignUp: SubmitHandler<ChangePasswordData> = async (data) => {
+    setError(null);
+    setSuccess(null);
+
     if (!isAuthenticated) {
       setError("You must be logged in to change your password");
       return;
@@ -61,14 +63,12 @@ export default function FormDialog() {
         },
         body: JSON.stringify(data),
       });
+      const { message } = await response.json();
       if (!response.ok) {
-        const { message } = await response.json();
         setError(message);
-        return;
+        throw new Error(message);
       }
-      setSuccess("Sign up successful");
-      setError("");
-      handleClose();
+      setSuccess(message);
     } catch (error) {
       console.error("There was an error!", error);
     }
@@ -119,6 +119,7 @@ export default function FormDialog() {
                 justifyContent: "center",
                 width: "100%",
               }}
+              onClick={handleClickOpen}
             >
               Change Password
             </Button>
