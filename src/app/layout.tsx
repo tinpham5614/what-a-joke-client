@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import NavBar from "../app/components/NavBar";
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import theme from "./theme/theme";
+import theme from "./themes/darkTheme";
 import CustomBox from "./components/CustomBox";
+import ThemeToggle from "./components/ThemeToggle";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,6 +24,7 @@ export default function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <NavBar />
+          <ThemeToggle /> {/* Add the ThemeToggle component */}
           <CustomBox>{children}</CustomBox>
         </body>
       </html>
