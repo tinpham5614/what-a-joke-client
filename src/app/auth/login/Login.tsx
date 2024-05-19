@@ -33,7 +33,6 @@ export default function Login() {
   const { register, handleSubmit, reset, watch } = useForm<LoginData>();
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { isAuthenticated } = useAuth();
 
   const handleLogin: SubmitHandler<LoginData> = async (data) => {
@@ -52,7 +51,6 @@ export default function Login() {
     }
 
     try {
-      setIsLoading(true);
       const apiUrl = process.env.NEXT_PUBLIC_AUTH_API_URL + "/login";
       const response = await fetch(apiUrl, {
         method: "POST",
@@ -74,8 +72,6 @@ export default function Login() {
       window.dispatchEvent(new Event("auth-change"));
     } catch (error) {
       console.error("There was an error!", error);
-    } finally {
-      setIsLoading(false);
     }
     reset();
   };
@@ -110,9 +106,6 @@ export default function Login() {
               // }
               >
             Login
-            <Grid item>
-              {isLoading && <CircularProgress size={24} />}
-            </Grid>
           </Button>
         </form>
         <SignUpDialog />
