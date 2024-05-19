@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import NavBar from "../app/components/NavBar";
-import { CssBaseline, ThemeProvider } from "@mui/material";
-import theme from "./theme/theme";
-import CustomBox from "./components/CustomBox";
+import { Providers } from "./theme/providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,14 +16,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline enableColorScheme />
-      <html lang="en">
-        <body className={inter.className}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      style={{ scrollBehavior: "smooth" }}
+    >
+      <body>
+        <Providers>
           <NavBar />
-          <CustomBox>{children}</CustomBox>
-        </body>
-      </html>
-    </ThemeProvider>
+          {children}
+        </Providers>
+      </body>
+    </html>
   );
 }
