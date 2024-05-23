@@ -21,6 +21,7 @@ import useAuth from "../hooks/useAuth";
 import HomeIcon from "@mui/icons-material/Home";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import ContactPageIcon from "@mui/icons-material/ContactPage";
+import ThemeToggle from "./ThemeToggle";
 
 interface Props {
   /**
@@ -69,7 +70,18 @@ export default function DrawerAppBar(props: Props) {
         ))}
       </List>
       <Divider />
-      <Grid item sx={{ display: "flex", justifyContent: "center" }}>
+      <Grid item>
+        <ThemeToggle />
+      </Grid>
+      <Grid
+        container
+        sx={{
+          position: "absolute",
+          bottom: 0,
+          width: "100%",
+          justifyContent: "center",
+        }}
+      >
         {isAuthenticated ? <AuthProfileMenu /> : null}
       </Grid>
     </Box>
@@ -114,6 +126,8 @@ export default function DrawerAppBar(props: Props) {
               ))}
             </Grid>
           </Box>
+          <Box sx={{ flexGrow: 1 }} />
+          <ThemeToggle />
           {isAuthenticated ? <AuthProfileMenu /> : null}
         </Toolbar>
       </AppBar>
