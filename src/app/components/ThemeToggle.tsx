@@ -13,12 +13,12 @@ const ThemeToggle = () => {
 
   // Render the appropriate icon based on the current theme mode
   if (mode === "light") {
-    return <FiMoon onClick={toggleTheme} aria-label="Toggle Light Theme" />;
+    return <FiMoon onClick={toggleTheme} aria-label="Toggle Dark Theme" />;
   }
 
   // Render the appropriate icon based on the current theme mode
   if (mode === "dark") {
-    return <FiSun onClick={toggleTheme} aria-label="Toggle Dark Theme" />;
+    return <FiSun onClick={toggleTheme} aria-label="Toggle Light Theme" />;
   }
 };
 

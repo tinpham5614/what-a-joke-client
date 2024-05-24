@@ -15,6 +15,15 @@ let darkTheme = createTheme({
       main: "#f50057",
     },
   },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          color: "#f5f5f5",
+        },
+      },
+    },
+  },
 });
 darkTheme = responsiveFontSizes(darkTheme);
 
@@ -29,6 +38,9 @@ let lightTheme = createTheme({
     },
     secondary: {
       main: "#f50057",
+    },
+    background: {
+      default: "#f5f5f5",
     },
   },
 });

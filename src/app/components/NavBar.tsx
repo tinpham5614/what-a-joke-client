@@ -60,7 +60,6 @@ export default function DrawerAppBar(props: Props) {
             <Link href={linkItems[index]} passHref>
               <Button
                 key={item}
-                sx={{ color: "#fff" }}
                 onClick={handleDrawerToggle}
               >
                 {item}
