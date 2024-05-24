@@ -19,7 +19,6 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      style={{ scrollBehavior: "smooth" }}
     >
       <body className={inter.className}>
         <ThemeContextProvider>
