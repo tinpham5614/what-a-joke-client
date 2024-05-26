@@ -59,11 +59,13 @@ export default function GetRandomJoke() {
     <Container fixed maxWidth="md" sx={{ textAlign: "center" }}>
       <Typography variant="h5">
         Are you not{" "}
-        <Typography component="span" variant="h4" sx={{ backgroundColor: "primary.main", color: "white", padding: 1, borderRadius: 1 }}>
-          {" "}
-          entertained
-        </Typography>{" "}
-        ?
+        <Typography
+          component="span"
+          variant="h5"
+          sx={{ p: .5, bgcolor: "primary.main", borderRadius: 1 }}
+        >
+          entertained?
+        </Typography>
       </Typography>
       <Box sx={{ mt: 2, width: "100%" }}>
         {loading ? <LinearProgress /> : null}

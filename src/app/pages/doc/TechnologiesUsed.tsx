@@ -1,4 +1,4 @@
-import { Container, Typography, Paper } from "@mui/material";
+import { Container, Typography, Paper, Button } from "@mui/material";
 import Link from "next/link";
 import React from "react";
 
@@ -43,11 +43,18 @@ export default function TechnologiesUsed() {
       <Paper sx={{ p: 2, mt: 2 }}>
         <Typography variant="body1" component="div">
           {technologies.map((tech, index) => (
-            <Container key={index} sx={{ mt: 1 }}>
-              {index + 1}.{" "}
-              <Link href={tech.url} target="_blank" rel="noopener noreferrer">
-                {tech.name}
-              </Link>
+            <Container key={index} sx={{ m: 1 }}>
+              <Button
+                href={tech.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                sx={{
+                  "&:hover": { textDecoration: "underline" },
+                  textTransform: "none",
+                }}
+              >
+                {index + 1}. {tech.name}
+              </Button>
             </Container>
           ))}
         </Typography>
