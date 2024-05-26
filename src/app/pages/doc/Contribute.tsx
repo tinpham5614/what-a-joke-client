@@ -40,7 +40,7 @@ export default function Contribute() {
             <Typography variant="body1">
               {index + 1}. {step}
             </Typography>
-            <Paper key={index} sx={{ p: 2, mt: 2 }}>
+            <Paper key={index} sx={{ p: 2, m: 2 }}>
               <Typography variant="body1">{contributeLinks[index]}</Typography>
             </Paper>
           </Container>

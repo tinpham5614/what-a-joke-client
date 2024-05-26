@@ -11,10 +11,10 @@ export default function Home() {
     // this is a grid layout with 3 columns
     <Grid
       container
-      spacing={{ xs: 2, md: 3 }}
-      columns={{ xs: 4, sm: 8, md: 12 }}
+      spacing={2}
+      columns={{ xs: 3, sm: 4, md: 12 }}
     >
-       {/* this is the first column */}
+      {/* this is the first column */}
       <Grid item xs={3}>
         <Login />
       </Grid>
@@ -28,21 +28,18 @@ export default function Home() {
       <Grid item xs={3}>
         <GetRandomJoke />
         <Divider sx={{ marginY: 2 }} />
-
-        {/* this is a floating button bottom right corner */}
-        <Grid
-          item
-          xs={12}
-          sx={{
-            position: "fixed",
-            bottom: 0,
-            right: 0,
-            margin: 2,
-          }}
-        >
-          <CreateNewJoke />
-        </Grid>
       </Grid>
+      {/* this is a floating button bottom right corner */}
+      <Box
+        sx={{
+          position: "fixed",
+          bottom: 0,
+          right: 0,
+          margin: 2,
+        }}
+      >
+        <CreateNewJoke />
+      </Box>
     </Grid>
   );
 }
