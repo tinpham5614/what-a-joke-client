@@ -1,8 +1,8 @@
 "use client";
 
-import GetRandomJoke from "./dashboard/GetRandomJoke";
+import GetRandomJoke from "./jokes/GetRandomJoke";
 import { Box, Divider, Grid } from "@mui/material";
-import CreateNewJoke from "./dashboard/CreateNewJoke";
+import CreateNewJoke from "./jokes/CreateNewJoke";
 import Login from "./auth/login/Login";
 import BasicTabs from "./components/NavTabs";
 
