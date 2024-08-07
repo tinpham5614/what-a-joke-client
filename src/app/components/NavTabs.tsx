@@ -5,8 +5,8 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import GetJokes from "../dashboard/GetJokes";
-import GetUsersJokes from "../dashboard/GetUsersJokes";
+import GetJokes from "../jokes/GetJokes";
+import GetUsersJokes from "../jokes/GetUsersJokes";
 
 interface TabPanelProps {
   children?: React.ReactNode;
